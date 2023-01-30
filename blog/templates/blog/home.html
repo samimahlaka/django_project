@@ -15,6 +15,17 @@
         </article>
     {%endfor%}
 
+
+    {% if is_paginated %}
+
+        {% if page_obj.has_previous  %}
+            <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+            <a class="btn btn-outline-info mb-4" href="?page = {{page_obj_previous_number}}">Previous</a>
+
+
+        {% endif %}
+
+    {%  endif %}
 {% endblock content%}
 
 
