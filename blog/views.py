@@ -6,7 +6,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ( ListView , 
 DetailView, 
 CreateView,
-UpdateView
+UpdateView,
+DeleteView
 )
 from django.contrib import messages
 
@@ -51,6 +52,20 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
             return True;
         else:
             return False
+
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
+    model = Post;
+    context_object_name = 'post'
+    success_url = reverse_lazy('blog-home');
+
+
+    def test_func(self):
+        post = self.get_object();
+        if self.request.user == post.author:
+            return True;
+        else:
+            return False;
+
         
 def about(request):
     return render(request, 'blog/about.html', {'title' : 'BlogAbout'});
